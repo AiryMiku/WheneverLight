@@ -1,6 +1,8 @@
 package com.airy.wheneverlight.api;
 
+import com.airy.wheneverlight.db.FriendsTimeLine;
 import com.airy.wheneverlight.db.PublicTimeLine;
+import com.airy.wheneverlight.db.Status;
 
 import java.util.Map;
 
@@ -17,7 +19,13 @@ import rx.Observable;
 
 public interface WeiboApi {
 
-    @GET("statuses/public_timeline.json")
+    @GET("/statuses/public_timeline.json")
     Observable<PublicTimeLine> getPublicTimeLine(@QueryMap Map<String,String> params);
+
+    @GET("/statuses/friends_timeline/ids.json")
+    Observable<FriendsTimeLine> getFriendTimeLine(@QueryMap Map<String,String> params);
+
+    @GET("statuses/show.json")
+    Observable<Status> getStatus(@QueryMap Map<String,String> params);
 
 }

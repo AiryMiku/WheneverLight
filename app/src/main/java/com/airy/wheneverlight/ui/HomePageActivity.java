@@ -1,7 +1,7 @@
 package com.airy.wheneverlight.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.fragment.HomePageFragment;
+import com.airy.wheneverlight.setting.SettingActivity;
 
 public class HomePageActivity extends AppCompatActivity {
 
@@ -59,7 +60,7 @@ public class HomePageActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
             case R.id.refresh:
-                Toast.makeText(this, "backup", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "刷新", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;
@@ -75,32 +76,29 @@ public class HomePageActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
         //
-        
+
         mNavigationView = (NavigationView) findViewById(R.id.nav);
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.home_page_drawer:
-                        replaceFragment(new HomePageFragment());
-                        break;
-                    case R.id.comment_drawer:
-                        //
-                        break;
-                    case R.id.at_weibo_drawer:
-                        //
-                        break;
-                    case R.id.at_comment_drawer:
-                        //
-                        break;
-                    case R.id.setting_drawer:
-                        //
-                        break;
-                }
-                item.setChecked(true);
-                mDrawerLayout.closeDrawers();
-                return true;
+        mNavigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.home_page_drawer:
+                    replaceFragment(new HomePageFragment());
+                    break;
+                case R.id.comment_drawer:
+                    //
+                    break;
+                case R.id.at_weibo_drawer:
+                    //
+                    break;
+                case R.id.at_comment_drawer:
+                    //
+                    break;
+                case R.id.setting_drawer:
+                    startActivity(new Intent(HomePageActivity.this, SettingActivity.class));
+                    break;
             }
+            item.setChecked(true);
+            mDrawerLayout.closeDrawers();
+            return true;
         });
         
         replaceFragment(new HomePageFragment());

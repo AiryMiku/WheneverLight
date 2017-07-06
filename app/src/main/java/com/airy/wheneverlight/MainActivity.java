@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.airy.wheneverlight.data.Constants;
@@ -33,24 +33,27 @@ public class MainActivity extends AppCompatActivity {
         mSsoHandler = new SsoHandler(MainActivity.this);
 
         //
-        findViewById(R.id.login_button_web).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSsoHandler.authorizeWeb(new WLAuthListener());
-            }
-        });
+        findViewById(R.id.login_button_web)
+                .setOnClickListener(v -> mSsoHandler.authorizeWeb(new WLAuthListener()));
 
-        findViewById(R.id.login_button_in_one).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSsoHandler.authorize(new WLAuthListener());
-            }
-        });
+        findViewById(R.id.login_button_in_one)
+                .setOnClickListener(v -> mSsoHandler.authorize(new WLAuthListener()));
 
+        findViewById(R.id.homepage_button)
+                .setOnClickListener(v -> startActivity(new Intent(MainActivity.this,HomePageActivity.class)));
+
+        findViewById(R.id.get_token_button)
+                .setOnClickListener(v -> {
+                    Oauth2AccessToken token = readToken(MainActivity.this);
+                    if (token.isSessionValid()){
+                        Log.d("Main","token true");
+                        System.out.println(token.getToken());
+                    }else{
+                        Log.d("Main","token false");
+                    }
+                });
 
     }
-
-
 
     private Oauth2AccessToken readToken(Context context) {
         return AccessTokenKeeper.readAccessToken(context);
@@ -59,18 +62,15 @@ public class MainActivity extends AppCompatActivity {
     private class WLAuthListener implements WbAuthListener{
         @Override
         public void onSuccess(final Oauth2AccessToken token) {
-            MainActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mAccessToken = token;
-                    if (mAccessToken.isSessionValid()) {
-                        // 显示 Token
-                        System.out.println(token);
-                        // 保存 Token 到 SharedPreferences
-                        AccessTokenKeeper.writeAccessToken(MainActivity.this, mAccessToken);
-                        Toast.makeText(MainActivity.this,
-                                "授权成功", Toast.LENGTH_SHORT).show();
-                    }
+            MainActivity.this.runOnUiThread(() -> {
+                mAccessToken = token;
+                if (mAccessToken.isSessionValid()) {
+                    // 显示 Token
+                    System.out.println(token);
+                    // 保存 Token 到 SharedPreferences
+                    AccessTokenKeeper.writeAccessToken(MainActivity.this, mAccessToken);
+                    Toast.makeText(MainActivity.this,
+                            "授权成功", Toast.LENGTH_SHORT).show();
                 }
             });
 

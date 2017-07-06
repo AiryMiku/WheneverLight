@@ -21,10 +21,10 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/send_weibo_float"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="bottom|right"
-            android:layout_margin="10dp"
+            android:layout_margin="25dp"
             android:src="@drawable/ic_write"/>
 
     </FrameLayout>

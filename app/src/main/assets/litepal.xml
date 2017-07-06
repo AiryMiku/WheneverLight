@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="db_WL" />
+
+    <version value="1" />
+
+    <list>
+        <mapping class="com.airy.wheneverlight.db.Status"></mapping>
+
+        <mapping class="com.airy.wheneverlight.db.User"></mapping>
+
+        <mapping class="com.airy.wheneverlight.db.PublicTimeLine"></mapping>
+    </list>
+
+</litepal>

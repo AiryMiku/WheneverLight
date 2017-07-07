@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,8 +28,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Airy on 2017/7/6.
@@ -38,6 +40,7 @@ public class HomePageFragment extends Fragment {
 
     private WeiboListViewAdapter adapter;
     private RecyclerView contentList;
+    private SwipeRefreshLayout swipeRefresh;
     private Oauth2AccessToken token;
     private List<Status> list = new ArrayList<>();
 
@@ -46,13 +49,20 @@ public class HomePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
         contentList = (RecyclerView) view.findViewById(R.id.content_list);
-        contentList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        contentList.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new WeiboListViewAdapter(list);
+        contentList.setAdapter(adapter);
+        swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.content_refresh);
+        swipeRefresh.setOnRefreshListener(() -> {
+            //getWeiboTimeLine();
+            swipeRefresh.setRefreshing(false);
+        });
         //
         FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.send_weibo_float);
         floatingActionButton.setOnClickListener(v ->{
             Toast.makeText(getActivity(),"不能发微博",Toast.LENGTH_SHORT).show();
         });
-
+        getWeiboTimeLine();
         return view;
     }
 
@@ -61,7 +71,7 @@ public class HomePageFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         Log.d("home_frg","init");
-        getWeiboTimeLine();
+
     }
 
     private void getWeiboTimeLine(){
@@ -72,12 +82,19 @@ public class HomePageFragment extends Fragment {
             String tkstr = token.getToken();
             String count ="50";
             WeiboApi weiboApi = WeiboFactory.getWeiBoApiSingleton();
-            weiboApi.getPublicTimeLine(getRequestMap(tkstr,count))
-                    .subscribeOn(Schedulers.io())
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .subscribe(publicTimeLine -> {
-                        displayWeiboList(publicTimeLine);
-                    });
+            Call<PublicTimeLine> publicTimeLineCall = weiboApi.getPublicTimeLine(tkstr);
+            publicTimeLineCall.enqueue(new Callback<PublicTimeLine>() {
+                @Override
+                public void onResponse(Call<PublicTimeLine> call, Response<PublicTimeLine> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<PublicTimeLine> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+
         }else{
             Log.d("Home_frg","token false");
         }
@@ -97,8 +114,9 @@ public class HomePageFragment extends Fragment {
 
     public void displayWeiboList(PublicTimeLine publicTimeLine){
         list = publicTimeLine.getStatuses();
-        adapter = new WeiboListViewAdapter(list);
-        contentList.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        for (Status list1:list){
+            Log.d("in list",list1.getText());
+        }
     }
 }

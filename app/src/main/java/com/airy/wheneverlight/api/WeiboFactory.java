@@ -36,6 +36,9 @@ public class WeiboFactory {
 
         weiboApiRetrofit() {
 
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .build();
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(new OkHttpClient())

@@ -6,7 +6,9 @@ import com.airy.wheneverlight.db.Status;
 
 import java.util.Map;
 
+import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 
@@ -19,10 +21,10 @@ import rx.Observable;
 
 public interface WeiboApi {
 
-    @GET("/statuses/public_timeline.json")
-    Observable<PublicTimeLine> getPublicTimeLine(@QueryMap Map<String,String> params);
+    @GET("statuses/public_timeline.json")
+    Call<PublicTimeLine> getPublicTimeLine(@Query("params") String token);
 
-    @GET("/statuses/friends_timeline/ids.json")
+    @GET("statuses/friends_timeline/ids.json")
     Observable<FriendsTimeLine> getFriendTimeLine(@QueryMap Map<String,String> params);
 
     @GET("statuses/show.json")

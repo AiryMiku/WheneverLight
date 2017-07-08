@@ -1,9 +1,7 @@
 package com.airy.wheneverlight.db;
 
-import org.litepal.crud.DataSupport;
-
 import java.io.Serializable;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * 该类定义了微博内容的集合
@@ -11,108 +9,124 @@ import java.util.List;
  * Created by Airy on 2017/7/4.
  */
 
-public class Status extends DataSupport implements Serializable{
+public class Status implements Serializable{
 
     private String created_at;
-    private int id;
+    private long id;
+    private String idstr;
     private String text;
     private String source;
-    private boolean favorited;
-    private boolean truncated;
-    private String geo;
-    private String mid;
-    private int reposts_count;
-    private int comments_count;
-    private List<String> annotations;
+    private String thumbnail_pic;
+    private String bmiddle_pic;
+    private String original_pic;
+    private String reposts_count;
+    private String comments_count;
+    private String attitudes_count;
+    private Status retweeted_status;
+    private ArrayList<ThumbnailPic> pic_urls;
+
     private User user;
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
+
     public String getCreated_at() {
         return created_at;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-    public String getText() {
-        return text;
+    public String getIdstr() {
+        return idstr;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public Status getRetweeted_status() {
+        return retweeted_status;
     }
+
+    public String getAttitudes_count() {
+        return attitudes_count;
+    }
+
+    public String getComments_count() {
+        return comments_count;
+    }
+
+    public String getReposts_count() {
+        return reposts_count;
+    }
+
+    public String getOriginal_pic() {
+        return original_pic;
+    }
+
+    public String getBmiddle_pic() {
+        return bmiddle_pic;
+    }
+
+    public String getThumbnail_pic() {
+        return thumbnail_pic;
+    }
+
     public String getSource() {
         return source;
     }
 
-    public void setFavorited(boolean favorited) {
-        this.favorited = favorited;
-    }
-    public boolean getFavorited() {
-        return favorited;
+    public String getText() {
+        return text;
     }
 
-    public void setTruncated(boolean truncated) {
-        this.truncated = truncated;
-    }
-    public boolean getTruncated() {
-        return truncated;
+    public ArrayList<ThumbnailPic> getPic_urls() {
+        return pic_urls;
     }
 
-    public void setGeo(String geo) {
-        this.geo = geo;
-    }
-    public String getGeo() {
-        return geo;
-    }
-
-    public void setMid(String mid) {
-        this.mid = mid;
-    }
-    public String getMid() {
-        return mid;
-    }
-
-    public void setReposts_count(int reposts_count) {
-        this.reposts_count = reposts_count;
-    }
-    public int getReposts_count() {
-        return reposts_count;
-    }
-
-    public void setComments_count(int comments_count) {
-        this.comments_count = comments_count;
-    }
-    public int getComments_count() {
-        return comments_count;
-    }
-
-    public void setAnnotations(List<String> annotations) {
-        this.annotations = annotations;
-    }
-    public List<String> getAnnotations() {
-        return annotations;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
     public User getUser() {
         return user;
     }
 
-    @Override
-    public String toString() {
-        return "user "+user.getName()+"\n"
-                +"text "+text;
+
+    public class ThumbnailPic implements Serializable{
+        private String thumbnail_pic;
+
+        public String getLargeImg(){
+            return thumbnail_pic.replace("thumbnail", "large");
+        }
+
+        public String getSmallImg(){
+            return thumbnail_pic.replace("thumbnail", "small");
+        }
+
+        public String getThumbnail_pic() {
+            return thumbnail_pic;
+        }
+
+        public String getImage(){
+            if (getThumbnail_pic().contains("thumbnail")) {
+                return getThumbnail_pic().replace("thumbnail", "large");
+            } else {
+                return getThumbnail_pic().replace("small", "large");
+            }
+        }
     }
 
+
+
+    @Override
+    public String toString() {
+        return "Status{" +
+                "created_at='" + created_at + '\'' +
+                ", id=" + id +
+                ", idstr='" + idstr + '\'' +
+                ", text='" + text + '\'' +
+                ", source='" + source + '\'' +
+                ", thumbnail_pic='" + thumbnail_pic + '\'' +
+                ", bmiddle_pic='" + bmiddle_pic + '\'' +
+                ", original_pic='" + original_pic + '\'' +
+                ", reposts_count='" + reposts_count + '\'' +
+                ", comments_count='" + comments_count + '\'' +
+                ", attitudes_count='" + attitudes_count + '\'' +
+                ", retweeted_status=" + retweeted_status +
+                ", pic_urls=" + pic_urls +
+                ", user=" + user +
+                '}';
+    }
 }

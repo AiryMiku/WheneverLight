@@ -28,24 +28,10 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-
         initView();
-
-        
-        
-        
 
     }
 
-
-    
-    
-    
-    
-    
-    
-    
-    
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

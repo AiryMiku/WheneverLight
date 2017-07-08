@@ -14,31 +14,29 @@ public class FriendsTimeLine {
      * total_number : 16
      */
 
-    private int total_number;
-    private List<String> statuses;
     private long id;
+    private String since_id;
+    private String max_id;
+    private List<Status> statuses;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public int getTotal_number() {
-        return total_number;
-    }
-
-    public void setTotal_number(int total_number) {
-        this.total_number = total_number;
-    }
-
-    public List<String> getStatuses() {
+    public List<Status> getStatuses() {
         return statuses;
     }
 
-    public void setStatuses(List<String> statuses) {
-        this.statuses = statuses;
+    public String getSince_id() {
+        return since_id;
+    }
+
+    public String getMax_id() {
+        return max_id;
+    }
+
+    @Override
+    public String toString() {
+        return "FriendsTimeLine{" +
+                "since_id='" + since_id + '\'' +
+                ", max_id='" + max_id + '\'' +
+                ", statuses=" + statuses +
+                '}';
     }
 }

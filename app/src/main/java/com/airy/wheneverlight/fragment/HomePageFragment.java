@@ -18,7 +18,7 @@ import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.apdater.WeiboListViewAdapter;
 import com.airy.wheneverlight.api.WeiboApi;
 import com.airy.wheneverlight.api.WeiboFactory;
-import com.airy.wheneverlight.db.PublicTimeLine;
+import com.airy.wheneverlight.db.FriendsTimeLine;
 import com.airy.wheneverlight.db.Status;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
@@ -28,9 +28,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Airy on 2017/7/6.
@@ -54,7 +53,7 @@ public class HomePageFragment extends Fragment {
         contentList.setAdapter(adapter);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.content_refresh);
         swipeRefresh.setOnRefreshListener(() -> {
-            //getWeiboTimeLine();
+            getWeiboTimeLine();
             swipeRefresh.setRefreshing(false);
         });
         //
@@ -76,24 +75,18 @@ public class HomePageFragment extends Fragment {
 
     private void getWeiboTimeLine(){
         Log.d("getwbl","init");
-        token = readToken(getActivity());
+        token = readToken(getContext());
         if (token.isSessionValid()){
             Log.d("Home_frg","token true");
             String tkstr = token.getToken();
-            String count ="50";
+            //String count ="50";
             WeiboApi weiboApi = WeiboFactory.getWeiBoApiSingleton();
-            Call<PublicTimeLine> publicTimeLineCall = weiboApi.getPublicTimeLine(tkstr);
-            publicTimeLineCall.enqueue(new Callback<PublicTimeLine>() {
-                @Override
-                public void onResponse(Call<PublicTimeLine> call, Response<PublicTimeLine> response) {
-
-                }
-
-                @Override
-                public void onFailure(Call<PublicTimeLine> call, Throwable t) {
-                    t.printStackTrace();
-                }
-            });
+            weiboApi.getFriendTimeLine(getRequestMap(tkstr))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(friendsTimeLine -> {
+                       displayWeiboList(friendsTimeLine);
+                    });
 
         }else{
             Log.d("Home_frg","token false");
@@ -101,10 +94,9 @@ public class HomePageFragment extends Fragment {
 
     }
 
-    private Map<String, String> getRequestMap(String token, String count) {
-        Map<String, String> map = new HashMap<>();
+    private Map<String,Object> getRequestMap(String token) {
+        Map<String, Object> map = new HashMap<>();
         map.put("access_token", token);
-        map.put("count", count);
         return map;
     }
 
@@ -112,11 +104,9 @@ public class HomePageFragment extends Fragment {
         return AccessTokenKeeper.readAccessToken(context);
     }
 
-    public void displayWeiboList(PublicTimeLine publicTimeLine){
-        list = publicTimeLine.getStatuses();
+    public void displayWeiboList(FriendsTimeLine friendsTimeLine){
+        list.clear();
+        list.addAll(friendsTimeLine.getStatuses());
         adapter.notifyDataSetChanged();
-        for (Status list1:list){
-            Log.d("in list",list1.getText());
-        }
     }
 }

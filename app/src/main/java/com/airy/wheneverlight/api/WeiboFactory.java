@@ -35,7 +35,6 @@ public class WeiboFactory {
 
 
         weiboApiRetrofit() {
-
             OkHttpClient client = new OkHttpClient.Builder()
                     .build();
 
@@ -47,7 +46,6 @@ public class WeiboFactory {
                     .build();
 
             weiboApiService = retrofit.create(WeiboApi.class);
-
         }
 
     }

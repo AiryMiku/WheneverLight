@@ -71,7 +71,6 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::displayWeiboList,this::onError);
-
         }else{
             Log.d("Home_frg","token false");
         }

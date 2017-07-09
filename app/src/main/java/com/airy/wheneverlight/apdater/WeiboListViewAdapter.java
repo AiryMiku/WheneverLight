@@ -6,10 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.db.Status;
+import com.airy.wheneverlight.util.StringUtil;
 
 import java.util.List;
 
@@ -29,13 +31,19 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
     class ViewHolder extends RecyclerView.ViewHolder{
 
         CardView cardView;
+        ImageView titleImage;
         TextView titleTx;
+        TextView titleTime;
+        TextView titleVia;
         TextView contentTx;
 
         public ViewHolder(View v){
             super(v);
             cardView = (CardView) v ;
+            titleImage = (ImageView) v.findViewById(R.id.wb_title_image);
             titleTx = (TextView) v.findViewById(R.id.wb_item_title);
+            titleTime = (TextView) v.findViewById(R.id.wb_title_time);
+            titleVia = (TextView) v.findViewById(R.id.wb_title_via);
             contentTx = (TextView) v.findViewById(R.id.wb_item_content);
         }
     }
@@ -54,6 +62,8 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
         Status s = statuses.get(position);
         holder.titleTx.setText(s.getUser().getName());
         holder.contentTx.setText(s.getText());
+        holder.titleTime.setText(s.getCreated_at().substring(0,19));
+        holder.titleVia.setText(StringUtil.getTail(s.getSource()));
     }
 
     @Override

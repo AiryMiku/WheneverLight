@@ -1,4 +1,4 @@
-package com.airy.wheneverlight.db;
+package com.airy.wheneverlight.bean;
 
 import org.litepal.crud.DataSupport;
 

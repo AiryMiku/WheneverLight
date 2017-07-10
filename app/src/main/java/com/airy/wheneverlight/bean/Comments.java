@@ -1,4 +1,4 @@
-package com.airy.wheneverlight.db;
+package com.airy.wheneverlight.bean;
 
 import java.io.Serializable;
 
@@ -14,6 +14,15 @@ public class Comments implements Serializable{
     private Status status;
     private User user;
     private String text;
+    private String source;
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
 
     public String getCreated_at() {
         return created_at;

@@ -1,4 +1,4 @@
-package com.airy.wheneverlight.db;
+package com.airy.wheneverlight.bean;
 
 import java.util.List;
 

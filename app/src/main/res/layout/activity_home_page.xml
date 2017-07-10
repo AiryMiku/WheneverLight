@@ -5,26 +5,13 @@
     android:id="@+id/home_page_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.airy.wheneverlight.ui.HomePageActivity">
+    tools:context="com.airy.wheneverlight.ui.activity.HomePageActivity">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.AppBarLayout>
+        <include layout="@layout/activity_view_toolbar"/>
 
         <FrameLayout
             android:id="@+id/content_fragment"

@@ -1,4 +1,4 @@
-package com.airy.wheneverlight.fragment;
+package com.airy.wheneverlight.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.airy.wheneverlight.contract.BaseFragmentContract;
-import com.airy.wheneverlight.db.MentionComment;
+import com.airy.wheneverlight.bean.MentionComment;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
 import java.util.ArrayList;

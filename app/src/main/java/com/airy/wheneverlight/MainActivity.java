@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.airy.wheneverlight.data.Constants;
-import com.airy.wheneverlight.ui.HomePageActivity;
+import com.airy.wheneverlight.ui.activity.HomePageActivity;
 import com.sina.weibo.sdk.WbSdk;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.AuthInfo;

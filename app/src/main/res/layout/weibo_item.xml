@@ -16,10 +16,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/wb_title_image"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="标题"
-                    android:textSize="18sp"
+                    android:textSize="13sp"
                     android:textColor="#000"/>
 
                 <LinearLayout
@@ -67,6 +67,32 @@
             android:textColor="#000"
             android:text="这是正文内容：skjdghjdshfkjsdhjkfhdsjhgjkshdjkfhsdjhguihsuihfguirughjfghuiruhufhgur" />
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+
+            <TextView
+                android:id="@+id/repost_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="转发 16"/>
+
+            <TextView
+                android:id="@+id/comment_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="评论 16"/>
+
+        </LinearLayout>
+
     </LinearLayout>
+
 
 </android.support.v7.widget.CardView>

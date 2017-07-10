@@ -1,5 +1,9 @@
 package com.airy.wheneverlight.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  * 处理字符串
  *
@@ -18,6 +22,24 @@ public class StringUtil {
         int end = source.indexOf("</a>",start);
         if (start == -1) return null;
         return source.substring(start+1,end);
+    }
+
+    /*
+    * 格式化时间
+    *
+    * */
+
+    public static String FormatDate(String rawDate){
+        SimpleDateFormat format1 = new SimpleDateFormat(
+                "EEE MMM d HH:mm:ss Z yyyy", Locale.CHINA);
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy MM dd hh:mm:ss");
+        try {
+            return formatDate.format(format1.parse(rawDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 

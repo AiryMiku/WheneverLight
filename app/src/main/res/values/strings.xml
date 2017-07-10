@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WheneverLight</string>
+    <string name="load_error">网络不给力啊</string>
+    <string name="load_success">哇成功了！</string>
 </resources>

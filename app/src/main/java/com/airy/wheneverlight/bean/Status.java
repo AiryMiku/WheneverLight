@@ -1,4 +1,4 @@
-package com.airy.wheneverlight.db;
+package com.airy.wheneverlight.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -107,8 +107,6 @@ public class Status implements Serializable{
             }
         }
     }
-
-
 
     @Override
     public String toString() {

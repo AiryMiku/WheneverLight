@@ -1,5 +1,6 @@
-package com.airy.wheneverlight.fragment;
+package com.airy.wheneverlight.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -18,8 +19,9 @@ import com.airy.wheneverlight.apdater.WeiboListViewAdapter;
 import com.airy.wheneverlight.api.WeiboApi;
 import com.airy.wheneverlight.api.WeiboFactory;
 import com.airy.wheneverlight.contract.BaseFragmentContract;
-import com.airy.wheneverlight.db.HomeTimeLine;
-import com.airy.wheneverlight.db.Status;
+import com.airy.wheneverlight.bean.HomeTimeLine;
+import com.airy.wheneverlight.bean.Status;
+import com.airy.wheneverlight.ui.activity.SendWeiboActivity;
 import com.airy.wheneverlight.util.Oauth2Util;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
 
@@ -48,8 +50,7 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
-        initView(view);
-        return view;
+        return initView(view);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
 
     public void onError(Throwable throwable){
         throwable.printStackTrace();
-        Toast.makeText(getActivity(),"网络开小差了？",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),R.string.load_error,Toast.LENGTH_SHORT).show();
         swipeRefresh.setRefreshing(false);
     }
 
@@ -101,7 +102,7 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
     public View initView(View view) {
         contentList = (RecyclerView) view.findViewById(R.id.home_page_content_list);
         contentList.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new WeiboListViewAdapter(list);
+        adapter = new WeiboListViewAdapter(getActivity(),list);
         contentList.setAdapter(adapter);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.home_page_content_refresh);
         swipeRefresh.setOnRefreshListener(() -> {
@@ -111,7 +112,8 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
         //
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.send_weibo_float);
         floatingActionButton.setOnClickListener(v ->{
-            Toast.makeText(getActivity(),"不能发微博",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getActivity(), SendWeiboActivity.class));
+            //Toast.makeText(getActivity(),"发微博啦",Toast.LENGTH_SHORT).show();
         });
         getWeiboTimeLine();
         return view;

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,15 +13,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.apdater.WeiboListViewAdapter;
 import com.airy.wheneverlight.api.WeiboApi;
 import com.airy.wheneverlight.api.WeiboFactory;
-import com.airy.wheneverlight.contract.BaseFragmentContract;
 import com.airy.wheneverlight.bean.HomeTimeLine;
 import com.airy.wheneverlight.bean.Status;
+import com.airy.wheneverlight.contract.BaseFragmentContract;
 import com.airy.wheneverlight.ui.activity.SendWeiboActivity;
 import com.airy.wheneverlight.util.Oauth2Util;
 import com.sina.weibo.sdk.auth.Oauth2AccessToken;
@@ -38,6 +38,12 @@ import rx.schedulers.Schedulers;
  */
 
 public class HomePageFragment extends Fragment implements BaseFragmentContract{
+
+    final static String COMMENT_TAG = "comment";
+    final static int COMMENT_TIME_LINE_TAG = 1;
+    final static int COMMENT_TO_ME_TAG = 2;
+    final static int COMMENT_MENTION_TAG = 3;
+    final static int COMMENT_BY_ME = 4;
 
     private FloatingActionButton floatingActionButton;
     private WeiboListViewAdapter adapter;
@@ -94,7 +100,7 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
 
     public void onError(Throwable throwable){
         throwable.printStackTrace();
-        Toast.makeText(getActivity(),R.string.load_error,Toast.LENGTH_SHORT).show();
+        Snackbar.make(floatingActionButton,R.string.load_error,Snackbar.LENGTH_SHORT).show();
         swipeRefresh.setRefreshing(false);
     }
 
@@ -117,5 +123,11 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
         });
         getWeiboTimeLine();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getWeiboTimeLine();
     }
 }

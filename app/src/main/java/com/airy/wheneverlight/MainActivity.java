@@ -4,11 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.airy.wheneverlight.data.Constants;
 import com.airy.wheneverlight.ui.activity.HomePageActivity;
+import com.airy.wheneverlight.util.Oauth2Util;
 import com.sina.weibo.sdk.WbSdk;
 import com.sina.weibo.sdk.auth.AccessTokenKeeper;
 import com.sina.weibo.sdk.auth.AuthInfo;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private SsoHandler mSsoHandler;
     private Oauth2AccessToken mAccessToken;
     private Context mContext;
+    private Button homePageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +41,29 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.login_button_in_one)
                 .setOnClickListener(v -> mSsoHandler.authorize(new WLAuthListener()));
 
-        findViewById(R.id.homepage_button)
-                .setOnClickListener(v -> startActivity(new Intent(MainActivity.this,HomePageActivity.class)));
+        homePageButton = (Button) findViewById(R.id.homepage_button);
+        homePageButton.setOnClickListener(v->{
+            startActivity(new Intent(MainActivity.this,HomePageActivity.class));
+        });
 
-        findViewById(R.id.get_token_button)
-                .setOnClickListener(v -> {
-                    Oauth2AccessToken token = readToken(MainActivity.this);
-                    if (token.isSessionValid()){
-                        Log.d("Main","token true");
-                        System.out.println(token.getToken());
-                    }else{
-                        Log.d("Main","token false");
-                    }
-                });
+        mAccessToken = Oauth2Util.readToken(this);
+        if (mAccessToken.isSessionValid()){
+            //有效的token直接进入首页
+            startActivity(new Intent(this,HomePageActivity.class));
+        } else {
+            Toast.makeText(this,R.string.token_error,Toast.LENGTH_SHORT).show();
+        }
+
+//        findViewById(R.id.get_token_button)
+//                .setOnClickListener(v -> {
+//                    Oauth2AccessToken token = readToken(MainActivity.this);
+//                    if (token.isSessionValid()){
+//                        Log.d("Main","token true");
+//                        System.out.println(token.getToken());
+//                    }else{
+//                        Log.d("Main","token false");
+//                    }
+//                });
 
     }
 

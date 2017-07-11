@@ -34,20 +34,28 @@ import rx.schedulers.Schedulers;
  * Created by Airy on 2017/7/10.
  */
 
-public class CommentTimeLineFragment extends Fragment implements BaseFragmentContract {
+public class CommentFragment extends Fragment implements BaseFragmentContract {
 
+    final static String COMMENT_TAG = "comment";
+    final static int COMMENT_TIME_LINE_TAG = 1;
+    final static int COMMENT_TO_ME_TAG = 2;
+    final static int COMMENT_MENTION_TAG = 3;
+    final static int COMMENT_BY_ME = 4;
+
+    private int currentCommentType;
     private CommentListViewAdapter adapter;
     private RecyclerView contentList;
     private SwipeRefreshLayout swipeRefresh;
     private Oauth2AccessToken token;
     private List<Comments> list = new ArrayList<>();
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    private void getCommentTimeLine(){
+    private void getComment(){
         swipeRefresh.setRefreshing(true);
         token = Oauth2Util.readToken(getContext());
         if(token.isSessionValid()){
@@ -96,10 +104,10 @@ public class CommentTimeLineFragment extends Fragment implements BaseFragmentCon
         adapter = new CommentListViewAdapter(getActivity(),list);
         contentList.setAdapter(adapter);
         swipeRefresh.setOnRefreshListener(()->{
-            getCommentTimeLine();
+            getComment();
             swipeRefresh.setRefreshing(false);
         });
-        getCommentTimeLine();
+        getComment();
         return view;
     }
 }

@@ -3,6 +3,7 @@ package com.airy.wheneverlight.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +23,7 @@ import com.airy.wheneverlight.api.WeiboFactory;
 import com.airy.wheneverlight.bean.User;
 import com.airy.wheneverlight.contract.BaseActivityContract;
 import com.airy.wheneverlight.setting.SettingActivity;
-import com.airy.wheneverlight.ui.fragment.CommentTimeLineFragment;
+import com.airy.wheneverlight.ui.fragment.CommentFragment;
 import com.airy.wheneverlight.ui.fragment.HomePageFragment;
 import com.airy.wheneverlight.util.Oauth2Util;
 import com.bumptech.glide.Glide;
@@ -36,6 +38,7 @@ import rx.schedulers.Schedulers;
 
 public class HomePageActivity extends AppCompatActivity implements BaseActivityContract{
 
+    private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private CircleImageView userIcon;
@@ -67,14 +70,16 @@ public class HomePageActivity extends AppCompatActivity implements BaseActivityC
     }
 
     public void disPlayUserInfo(User u){
+        currentUser = u;
+        toolbar.setTitle(u.getName());
         userName.setText(u.getName());
         Glide.with(HomePageActivity.this).load(u.getAvatar_large()).into(userIcon);
-        Glide.with(HomePageActivity.this).load(u.getProfile_image_url()).into(userBackground);
+        Glide.with(HomePageActivity.this).load(u.getCover_image_phone()).into(userBackground);
     }
 
     public void onError(Throwable throwable){
         throwable.printStackTrace();
-        Toast.makeText(this,R.string.load_error,Toast.LENGTH_SHORT).show();
+        Snackbar.make(toolbar,R.string.load_error,Snackbar.LENGTH_SHORT).show();
     }
 
     private Map<String,Object> getRequestMap(String token, String uid) {
@@ -105,11 +110,9 @@ public class HomePageActivity extends AppCompatActivity implements BaseActivityC
 
     @Override
     public void initView(){
-        userBackground = (ImageView) findViewById(R.id.user_background);
-        userIcon = (CircleImageView) findViewById(R.id.user_icon);
-        userName = (TextView) findViewById(R.id.user_name);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.home_page_drawer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar!=null){
@@ -119,13 +122,19 @@ public class HomePageActivity extends AppCompatActivity implements BaseActivityC
         //
 
         mNavigationView = (NavigationView) findViewById(R.id.nav);
+        View navHeader = mNavigationView.getHeaderView(0);
+        userBackground = (ImageView) navHeader.findViewById(R.id.user_background);
+        userIcon = (CircleImageView) navHeader.findViewById(R.id.user_icon);
+        userName = (TextView) navHeader.findViewById(R.id.user_name);
         mNavigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.home_page_drawer:
                     replaceFragment(new HomePageFragment());
+                    toolbar.setTitle(currentUser.getName()+"的时间线");
                     break;
                 case R.id.comment_drawer:
-                    replaceFragment(new CommentTimeLineFragment());
+                    replaceFragment(new CommentFragment());
+                    toolbar.setTitle("收到评论");
                     break;
                 case R.id.at_weibo_drawer:
                     //
@@ -149,6 +158,5 @@ public class HomePageActivity extends AppCompatActivity implements BaseActivityC
     private void replaceFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.content_fragment,fragment).commit();
     }
-
 
 }

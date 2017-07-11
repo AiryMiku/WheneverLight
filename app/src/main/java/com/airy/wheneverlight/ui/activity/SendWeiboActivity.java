@@ -59,7 +59,6 @@ public class SendWeiboActivity extends AppCompatActivity implements BaseActivity
                 onBackPressed();
                 break;
             case R.id.send:
-                Toast.makeText(this,"发送",Toast.LENGTH_SHORT).show();
                 sendWeibo(statusText.getText().toString()+"http://android.com.cn");
                 //安全域名是自己的Android下载地址，而且要和自己所填的安全域名相同。。。
                 break;

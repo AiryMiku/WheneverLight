@@ -2,7 +2,6 @@ package com.airy.wheneverlight.apdater;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,10 @@ import android.widget.TextView;
 
 import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.bean.Comments;
-import com.airy.wheneverlight.bean.MentionComment;
 import com.airy.wheneverlight.util.StringUtil;
 import com.bumptech.glide.Glide;
+
+import org.w3c.dom.Comment;
 
 import java.util.List;
 
@@ -54,10 +54,9 @@ public class CommentListViewAdapter extends RecyclerView.Adapter<CommentListView
         holder.titleVia.setText(StringUtil.getTail(c.getSource()));
         holder.posterName.setText("@"+c.getStatus().getUser().getName()+":");
         holder.posterContentTx.setText(c.getStatus().getText());
-        Log.d("CommentAdapter",c.getUser().getAvatar_large());
         Glide.with(mContext).
             load(c.getUser().getAvatar_large()).
-                load(holder.titleImage);
+                into(holder.titleImage);
         /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +71,7 @@ public class CommentListViewAdapter extends RecyclerView.Adapter<CommentListView
     }
 
     public interface OnItemClickListener {
-        void onItemClick(MentionComment item);
+        void onItemClick(Comment item);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/repost"
+        android:icon="@drawable/ic_post"
+        android:title="转发"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/comment"
+        android:icon="@drawable/ic_comment"
+        android:title="评论"
+        app:showAsAction="always">
+    </item>
+
+</menu>

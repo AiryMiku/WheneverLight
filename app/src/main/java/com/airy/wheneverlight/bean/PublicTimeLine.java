@@ -2,7 +2,6 @@ package com.airy.wheneverlight.bean;
 
 import org.litepal.crud.DataSupport;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +10,7 @@ import java.util.List;
  * Created by Airy on 2017/7/4.
  */
 
-public class PublicTimeLine extends DataSupport implements Serializable{
+public class PublicTimeLine extends DataSupport {
 
     private List<Status> statuses;
     private int previous_cursor;

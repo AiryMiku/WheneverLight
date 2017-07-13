@@ -124,10 +124,4 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
         getWeiboTimeLine();
         return view;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getWeiboTimeLine();
-    }
 }

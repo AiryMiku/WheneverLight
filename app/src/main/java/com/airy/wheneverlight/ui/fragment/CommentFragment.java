@@ -37,9 +37,9 @@ import rx.schedulers.Schedulers;
 public class CommentFragment extends Fragment implements BaseFragmentContract {
 
     final static String COMMENT_TAG = "comment";
-    final static int COMMENT_TIME_LINE_TAG = 1;
-    final static int COMMENT_TO_ME_TAG = 2;
-    final static int COMMENT_MENTION_TAG = 3;
+    final static int COMMENT_TIME_LINE = 1;
+    final static int COMMENT_TO_ME = 2;
+    final static int COMMENT_MENTION = 3;
     final static int COMMENT_BY_ME = 4;
 
     private int currentCommentType;
@@ -55,17 +55,48 @@ public class CommentFragment extends Fragment implements BaseFragmentContract {
         super.onCreate(savedInstanceState);
     }
 
-    private void getComment(){
+    //反射构造一个commentFragment实例
+    public static CommentFragment newInstance(int commentType){
+        CommentFragment commentFragment = new CommentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(COMMENT_TAG,commentType);
+        commentFragment.setArguments(bundle);
+        return commentFragment;
+    }
+
+    private void getComment(int type){
         swipeRefresh.setRefreshing(true);
         token = Oauth2Util.readToken(getContext());
         if(token.isSessionValid()){
             Log.d("CommentTimeLine","token true");
             String tkstr = token.getToken();
             WeiboApi weiboapi = WeiboFactory.getWeiBoApiSingleton();
-            weiboapi.getMessageCommentTimeLine(getRequestMap(tkstr))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(this::displayCommentList,this::onError);
+            switch (type){
+                case COMMENT_TIME_LINE :
+                    weiboapi.getMessageCommentTimeLine(getRequestMap(tkstr))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(this::displayCommentList,this::onError);
+                    break;
+                case COMMENT_TO_ME :
+                    weiboapi.getMessageGetComment(getRequestMap(tkstr))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(this::displayCommentList,this::onError);
+                    break;
+                case COMMENT_BY_ME :
+                    weiboapi.getMessageSendComment(getRequestMap(tkstr))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(this::displayCommentList,this::onError);
+                    break;
+                case COMMENT_MENTION :
+                    weiboapi.getMessageAtComment(getRequestMap(tkstr))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(this::displayCommentList,this::onError);
+                    break;
+            }
         }
     }
 
@@ -93,6 +124,10 @@ public class CommentFragment extends Fragment implements BaseFragmentContract {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_comment,container,false);
+        //处理commentType
+        if(getArguments()!=null){
+            currentCommentType = getArguments().getInt(COMMENT_TAG);
+        }
         return initView(view);
     }
 
@@ -104,10 +139,10 @@ public class CommentFragment extends Fragment implements BaseFragmentContract {
         adapter = new CommentListViewAdapter(getActivity(),list);
         contentList.setAdapter(adapter);
         swipeRefresh.setOnRefreshListener(()->{
-            getComment();
+            getComment(currentCommentType);
             swipeRefresh.setRefreshing(false);
         });
-        getComment();
+        getComment(currentCommentType);
         return view;
     }
 }

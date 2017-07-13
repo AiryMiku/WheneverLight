@@ -28,7 +28,7 @@ public class CommentListViewAdapter extends RecyclerView.Adapter<CommentListView
     private static final String TAG = CommentListViewAdapter.class.getSimpleName();
     private Context mContext;
     private List<Comments> mList;
-    //private OnItemClickListener mListener;
+    private OnItemClickListener mListener;
 
     public CommentListViewAdapter(Context context, List<Comments> list) {
         this.mContext = context;

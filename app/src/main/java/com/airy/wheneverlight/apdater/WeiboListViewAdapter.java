@@ -1,6 +1,8 @@
 package com.airy.wheneverlight.apdater;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,8 +12,11 @@ import android.widget.TextView;
 
 import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.bean.Status;
+import com.airy.wheneverlight.ui.activity.WeiboDetailActivity;
 import com.airy.wheneverlight.util.StringUtil;
 import com.bumptech.glide.Glide;
+
+import org.w3c.dom.Comment;
 
 import java.util.List;
 
@@ -23,12 +28,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdapter.ViewHolder> {
 
+    final static String TAG = "Airy";
     private Context mContext;
     private List<Status> statuses;
+    private OnItemClickListener mListener;
 
     public WeiboListViewAdapter(Context context,List<Status> list) {
         this.statuses = list;
         this.mContext = context;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Comment item);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -41,9 +52,11 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
         TextView contentTx;
         TextView repostTx;
         TextView commentTx;
+        View weiboItemView;
 
         public ViewHolder(View v){
             super(v);
+            weiboItemView = v;
             cardView = (CardView) v ;
             titleImage = (CircleImageView) v.findViewById(R.id.wb_title_image);
             titleTx = (TextView) v.findViewById(R.id.wb_item_title);
@@ -61,7 +74,18 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
             mContext = parent.getContext();
         }
         View v = LayoutInflater.from(mContext).inflate(R.layout.weibo_item,parent,false);
-        return new ViewHolder(v);
+        final ViewHolder holder = new ViewHolder(v);
+
+        holder.weiboItemView.setOnClickListener(v1 -> {
+            int postion = holder.getAdapterPosition();
+            Status status = statuses.get(postion);
+            Intent intent = new Intent(mContext, WeiboDetailActivity.class);
+            Bundle mBundle = new Bundle();
+            mBundle.putSerializable(TAG,status);
+            intent.putExtras(mBundle);
+            mContext.startActivity(intent);
+        });
+        return holder;
     }
 
     @Override

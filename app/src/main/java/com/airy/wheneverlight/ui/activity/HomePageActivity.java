@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.api.WeiboApi;
@@ -37,6 +36,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class HomePageActivity extends AppCompatActivity implements BaseActivityContract{
+
+    final static int COMMENT_TIME_LINE = 1;
+    final static int COMMENT_TO_ME = 2;
+    final static int COMMENT_MENTION = 3;
+    final static int COMMENT_BY_ME = 4;
 
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
@@ -71,7 +75,7 @@ public class HomePageActivity extends AppCompatActivity implements BaseActivityC
 
     public void disPlayUserInfo(User u){
         currentUser = u;
-        toolbar.setTitle(u.getName());
+        //toolbar.setTitle(u.getName());
         userName.setText(u.getName());
         Glide.with(HomePageActivity.this).load(u.getAvatar_large()).into(userIcon);
         Glide.with(HomePageActivity.this).load(u.getCover_image_phone()).into(userBackground);
@@ -101,9 +105,9 @@ public class HomePageActivity extends AppCompatActivity implements BaseActivityC
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
-            case R.id.refresh:
-                Toast.makeText(this, "刷新", Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.refresh:
+//                Toast.makeText(this, "刷新", Toast.LENGTH_SHORT).show();
+//                break;
         }
         return true;
     }
@@ -130,17 +134,27 @@ public class HomePageActivity extends AppCompatActivity implements BaseActivityC
             switch (item.getItemId()){
                 case R.id.home_page_drawer:
                     replaceFragment(new HomePageFragment());
-                    toolbar.setTitle(currentUser.getName()+"的时间线");
+                    toolbar.setTitle(currentUser.getName());
+                    break;
+                case R.id.to_me_comment_drawer:
+                    replaceCommentFragment(COMMENT_TO_ME);
+                    toolbar.setTitle("收到的评论");
+                    break;
+                case R.id.by_me_comment_drawer:
+                    replaceCommentFragment(COMMENT_BY_ME);
+                    toolbar.setTitle("我发出的评论");
+                    break;
+                case R.id.at_comment_drawer:
+                    replaceCommentFragment(COMMENT_MENTION);
+                    toolbar.setTitle("@我的评论");
                     break;
                 case R.id.comment_drawer:
-                    replaceFragment(new CommentFragment());
-                    toolbar.setTitle("收到评论");
+                    replaceCommentFragment(COMMENT_TIME_LINE);
+                    toolbar.setTitle("全部评论");
                     break;
                 case R.id.at_weibo_drawer:
                     //
-                    break;
-                case R.id.at_comment_drawer:
-                    //
+                    toolbar.setTitle("@我的微博");
                     break;
                 case R.id.setting_drawer:
                     startActivity(new Intent(HomePageActivity.this, SettingActivity.class));
@@ -152,11 +166,22 @@ public class HomePageActivity extends AppCompatActivity implements BaseActivityC
         });
         
         replaceFragment(new HomePageFragment());
-        
+        //mNavigationView.getMenu().getItem(R.id.home_page_drawer).setChecked(true);
     }
 
     private void replaceFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_fragment,fragment).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_fragment,fragment)
+                .commit();
+    }
+
+    //区分CommentFragment
+    private void replaceCommentFragment(int params){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_fragment,CommentFragment.newInstance(params))
+                .commit();
     }
 
 }

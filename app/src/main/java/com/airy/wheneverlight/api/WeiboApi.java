@@ -32,6 +32,9 @@ public interface WeiboApi {
     @GET("statuses/home_timeline.json")
     Observable<HomeTimeLine> getHomeTimeLine(@QueryMap Map<String,Object> params);
 
+    @GET("statuses/mentions.json")
+    Observable<HomeTimeLine> getMessageAtWeiBo(@QueryMap Map<String,Object> params);
+
     @GET("comments/timeline.json")
     Observable<MentionComment> getMessageCommentTimeLine(@QueryMap Map<String,Object> params);
 

@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.airy.wheneverlight.MainActivity;
 import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.api.WeiboApi;
 import com.airy.wheneverlight.api.WeiboFactory;
@@ -55,6 +57,11 @@ public class HomePageActivity extends AppCompatActivity implements BaseActivityC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+        token = Oauth2Util.readToken(this);
+        if(!token.isSessionValid()){
+            Toast.makeText(this,"token已过期，请重新登陆",Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainActivity.class));
+        }
         initView();
         getCurrentUser();
     }

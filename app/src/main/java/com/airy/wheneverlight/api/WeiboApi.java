@@ -47,6 +47,9 @@ public interface WeiboApi {
     @GET("comments/by_me.json")
     Observable<MentionComment> getMessageSendComment(@QueryMap Map<String,Object> params);
 
+    @GET("comments/show.json")
+    Observable<MentionComment> getMessageCommnetById(@QueryMap Map<String,Object> params);
+
     @FormUrlEncoded
     @POST("statuses/share.json")
     Observable<Status> sendWeiboWithText(@FieldMap Map<String,Object> params);

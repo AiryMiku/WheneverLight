@@ -67,6 +67,56 @@
             android:textColor="#000"
             android:text="这是正文内容：skjdghjdshfkjsdhjkfhdsjhgjkshdjkfhsdjhguihsuihfguirughjfghuiruhufhgur" />
 
+        <com.airy.wheneverlight.view.NineGridLayout
+            android:id="@+id/wb_item_nine_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"/>
+
+        <com.airy.wheneverlight.view.SingleImage
+            android:id="@+id/wb_item_singleimage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/retweeted_layout"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:background="#8B7B8B"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/retweeted_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Are you ok?:"/>
+            
+            <TextView
+                android:id="@+id/retweeted_content_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="kdjgksfdjgsdjflkdsjfjdslkgjsklgjklglkdfjgk"/>
+            
+            <com.airy.wheneverlight.view.NineGridLayout
+                android:id="@+id/retweeted_nine_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"/>
+
+            <com.airy.wheneverlight.view.SingleImage
+                android:id="@+id/retweeted_singleimage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"/>
+
+        </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

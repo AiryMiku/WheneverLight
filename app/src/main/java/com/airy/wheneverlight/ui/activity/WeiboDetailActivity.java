@@ -71,7 +71,6 @@ public class WeiboDetailActivity extends AppCompatActivity implements BaseActivi
         weiboTabLayout.addTab(weiboTabLayout.newTab().setText("评论"));
         weiboTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-
         //weiboTabLayout.addOnTabSelectedListener();
 
         adapter = new WeiboViewPageAdapter(getSupportFragmentManager(),mStatus.getIdstr());

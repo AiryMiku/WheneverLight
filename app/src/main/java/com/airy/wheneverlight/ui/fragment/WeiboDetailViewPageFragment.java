@@ -3,6 +3,7 @@ package com.airy.wheneverlight.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -71,6 +72,7 @@ public class WeiboDetailViewPageFragment extends Fragment implements BaseFragmen
     @Override
     public View initView(View view) {
         viewPageList = (RecyclerView) view.findViewById(R.id.view_page_list);
+        viewPageList.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         viewPageList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ViewPageDetailListViewAdapter(getActivity(),list);
         viewPageList.setAdapter(adapter);

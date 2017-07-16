@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.airy.wheneverlight.R;
@@ -53,6 +54,7 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
         TextView repostTx;
         TextView commentTx;
         View weiboItemView;
+        LinearLayout retweetedLayout;
 
         public ViewHolder(View v){
             super(v);
@@ -65,6 +67,7 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
             contentTx = (TextView) v.findViewById(R.id.wb_item_content);
             repostTx = (TextView) v.findViewById(R.id.repost_num);
             commentTx = (TextView) v.findViewById(R.id.comment_num);
+            retweetedLayout = (LinearLayout) v.findViewById(R.id.retweeted_layout);
         }
     }
 
@@ -98,6 +101,12 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
         Glide.with(mContext).load(s.getUser().getAvatar_large()).into(holder.titleImage);
         holder.commentTx.setText("评论 "+s.getComments_count());
         holder.repostTx.setText("转发 "+s.getReposts_count());
+
+        if (s.getRetweeted_status()!=null){
+
+        }else {
+            holder.retweetedLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override

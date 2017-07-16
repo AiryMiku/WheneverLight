@@ -15,6 +15,8 @@ import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.bean.Status;
 import com.airy.wheneverlight.ui.activity.WeiboDetailActivity;
 import com.airy.wheneverlight.util.StringUtil;
+import com.airy.wheneverlight.view.NineGridLayout;
+import com.airy.wheneverlight.view.SingleImage;
 import com.bumptech.glide.Glide;
 
 import org.w3c.dom.Comment;
@@ -55,6 +57,8 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
         TextView commentTx;
         View weiboItemView;
         LinearLayout retweetedLayout;
+        SingleImage oneImage;
+        NineGridLayout nineImage;
 
         public ViewHolder(View v){
             super(v);
@@ -68,6 +72,8 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
             repostTx = (TextView) v.findViewById(R.id.repost_num);
             commentTx = (TextView) v.findViewById(R.id.comment_num);
             retweetedLayout = (LinearLayout) v.findViewById(R.id.retweeted_layout);
+            oneImage = (SingleImage) v.findViewById(R.id.wb_item_singleimage);
+            nineImage = (NineGridLayout) v.findViewById(R.id.wb_item_nine_image);
         }
     }
 
@@ -92,7 +98,7 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder,final int position) {
+    public void onBindViewHolder(ViewHolder holder,int position) {
         Status s = statuses.get(position);
         holder.titleTx.setText(s.getUser().getName());
         holder.contentTx.setText(s.getText());
@@ -103,9 +109,23 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
         holder.repostTx.setText("转发 "+s.getReposts_count());
 
         if (s.getRetweeted_status()!=null){
+            holder.nineImage.setVisibility(View.GONE);
+            holder.oneImage.setVisibility(View.GONE);
 
         }else {
             holder.retweetedLayout.setVisibility(View.GONE);
+            if (s.getPic_urls().size() == 0){
+                //没有图片
+                holder.nineImage.setVisibility(View.GONE);
+                holder.oneImage.setVisibility(View.GONE);
+            }else if (s.getPic_urls().size() == 1){
+                //只有一张图片
+                holder.nineImage.setVisibility(View.GONE);
+                Glide.with(mContext).load(s.getOriginal_pic()).into(holder.oneImage);
+            }else{
+                //多张图片
+                holder.oneImage.setVisibility(View.GONE);
+            }
         }
     }
 

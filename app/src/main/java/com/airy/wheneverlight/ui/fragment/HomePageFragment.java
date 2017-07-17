@@ -108,7 +108,7 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
     public View initView(View view) {
         contentList = (RecyclerView) view.findViewById(R.id.home_page_content_list);
         contentList.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new WeiboListViewAdapter(getActivity(),list);
+        adapter = new WeiboListViewAdapter(getContext(),list);
         contentList.setAdapter(adapter);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.home_page_content_refresh);
         swipeRefresh.setOnRefreshListener(() -> {

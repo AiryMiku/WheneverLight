@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,9 +110,10 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
         holder.repostTx.setText("转发 "+s.getReposts_count());
 
         if (s.getRetweeted_status()!=null){
+            holder.retweetedLayout.setVisibility(View.VISIBLE);//全局属性，用到的地方必须Visible
             holder.nineImage.setVisibility(View.GONE);
             holder.oneImage.setVisibility(View.GONE);
-
+            Log.d("WeiboListAdapter",position+" has retweet");
         }else {
             holder.retweetedLayout.setVisibility(View.GONE);
             if (s.getPic_urls().size() == 0){
@@ -121,10 +123,13 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
             }else if (s.getPic_urls().size() == 1){
                 //只有一张图片
                 holder.nineImage.setVisibility(View.GONE);
+                holder.oneImage.setVisibility(View.VISIBLE);
                 Glide.with(mContext).load(s.getOriginal_pic()).into(holder.oneImage);
-            }else{
+                //Log.d("WeiboListAdapter",position+" "+s.getPic_urls().get(0).getImage());
+            }else if (s.getPic_urls().size() > 1){
                 //多张图片
                 holder.oneImage.setVisibility(View.GONE);
+                holder.nineImage.setVisibility(View.VISIBLE);
             }
         }
     }

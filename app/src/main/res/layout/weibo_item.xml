@@ -84,7 +84,7 @@
             android:id="@+id/retweeted_layout"
             android:layout_width="290dp"
             android:layout_height="wrap_content"
-            android:background="#8B7B8B"
+            android:background="#e2dff1"
             android:layout_marginLeft="60dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
@@ -94,7 +94,8 @@
                 android:id="@+id/retweeted_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Are you ok?:"/>
+                android:text="Are you ok?:"
+                android:textColor="@color/colorAccent"/>
             
             <TextView
                 android:id="@+id/retweeted_content_text"

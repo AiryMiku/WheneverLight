@@ -61,6 +61,11 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
         SingleImage oneImage;
         NineGridLayout nineImage;
 
+        TextView retweetedTitle;
+        TextView retweetedContent;
+        SingleImage retweetedSingleImage;
+        NineGridLayout retweetedNineImage;
+
         public ViewHolder(View v){
             super(v);
             weiboItemView = v;
@@ -72,9 +77,15 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
             contentTx = (TextView) v.findViewById(R.id.wb_item_content);
             repostTx = (TextView) v.findViewById(R.id.repost_num);
             commentTx = (TextView) v.findViewById(R.id.comment_num);
-            retweetedLayout = (LinearLayout) v.findViewById(R.id.retweeted_layout);
+
             oneImage = (SingleImage) v.findViewById(R.id.wb_item_singleimage);
             nineImage = (NineGridLayout) v.findViewById(R.id.wb_item_nine_image);
+
+            retweetedLayout = (LinearLayout) v.findViewById(R.id.retweeted_layout);
+            retweetedTitle = (TextView) v.findViewById(R.id.retweeted_title);
+            retweetedContent = (TextView) v.findViewById(R.id.retweeted_content_text);
+            retweetedSingleImage = (SingleImage) v.findViewById(R.id.retweeted_singleimage);
+            retweetedNineImage = (NineGridLayout) v.findViewById(R.id.retweeted_nine_image);
         }
     }
 
@@ -109,12 +120,37 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
         holder.commentTx.setText("评论 "+s.getComments_count());
         holder.repostTx.setText("转发 "+s.getReposts_count());
 
-        if (s.getRetweeted_status()!=null){
-            holder.retweetedLayout.setVisibility(View.VISIBLE);//全局属性，用到的地方必须Visible
+        Status rs = s.getRetweeted_status();
+
+        if (rs != null){
+            //有转发
+            Log.d("WeiboListAdapter",position+" has retweet");
+            holder.retweetedLayout.setVisibility(View.VISIBLE);//全局属性，用到的地方必须Visible,但是这样不优雅...
             holder.nineImage.setVisibility(View.GONE);
             holder.oneImage.setVisibility(View.GONE);
-            Log.d("WeiboListAdapter",position+" has retweet");
+            holder.retweetedTitle.setText(rs.getUser().getName());
+            holder.retweetedContent.setText(rs.getText());
+
+            if (rs.getPic_urls().size() == 0){
+                //没有图片
+                holder.retweetedSingleImage.setVisibility(View.GONE);
+                holder.retweetedNineImage.setVisibility(View.GONE);
+
+            }else if (rs.getPic_urls().size() == 1){
+                //只有一张图片
+                holder.retweetedNineImage.setVisibility(View.GONE);
+                holder.retweetedSingleImage.setVisibility(View.VISIBLE);
+                Glide.with(mContext).load(rs.getOriginal_pic()).into(holder.retweetedSingleImage);
+                //Log.d("WeiboListAdapter",position+" "+s.getPic_urls().get(0).getImage());
+            }else if (rs.getPic_urls().size() > 1){
+                //多张图片
+                holder.retweetedSingleImage.setVisibility(View.GONE);
+                holder.retweetedNineImage.setVisibility(View.VISIBLE);
+                holder.retweetedNineImage.setImagesData(rs.getPic_urls());
+            }
+
         }else {
+            //没转发
             holder.retweetedLayout.setVisibility(View.GONE);
             if (s.getPic_urls().size() == 0){
                 //没有图片
@@ -130,6 +166,7 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
                 //多张图片
                 holder.oneImage.setVisibility(View.GONE);
                 holder.nineImage.setVisibility(View.VISIBLE);
+                holder.nineImage.setImagesData(s.getPic_urls());
             }
         }
     }

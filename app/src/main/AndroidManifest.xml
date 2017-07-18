@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".ui.activity.HomePageActivity"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,8 +36,8 @@
         <activity
             android:name=".ui.activity.SendWeiboActivity"
             android:label="发微博" />
-        <activity
-            android:name=".ui.activity.WeiboDetailActivity" />
+        <activity android:name=".ui.activity.WeiboDetailActivity" />
+        <activity android:name=".ui.activity.RepostAndCommentActivity"></activity>
     </application>
 
 </manifest>

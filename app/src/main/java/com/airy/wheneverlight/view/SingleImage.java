@@ -1,15 +1,10 @@
 package com.airy.wheneverlight.view;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.airy.wheneverlight.util.ScreenUtil;
 import com.bumptech.glide.Glide;
 
 /**

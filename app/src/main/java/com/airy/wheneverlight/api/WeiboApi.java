@@ -1,5 +1,6 @@
 package com.airy.wheneverlight.api;
 
+import com.airy.wheneverlight.bean.Comments;
 import com.airy.wheneverlight.bean.HomeTimeLine;
 import com.airy.wheneverlight.bean.MentionComment;
 import com.airy.wheneverlight.bean.Status;
@@ -53,5 +54,9 @@ public interface WeiboApi {
     @FormUrlEncoded
     @POST("statuses/share.json")
     Observable<Status> sendWeiboWithText(@FieldMap Map<String,Object> params);
+
+    @FormUrlEncoded
+    @POST("comments/create.json")
+    Observable<Comments> sendCommentToStatus(@FieldMap Map<String,Object> params);
 
 }

@@ -1,5 +1,6 @@
 package com.airy.wheneverlight.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -94,7 +95,9 @@ public class WeiboDetailActivity extends AppCompatActivity implements BaseActivi
                 //
                 break;
             case R.id.comment:
-                //
+                Intent intent = new Intent(this,RepostAndCommentActivity.class);
+                intent.putExtra(TAG,mStatus.getIdstr());
+                startActivity(intent);
                 break;
 
         }

@@ -56,14 +56,6 @@ public class SingleImage extends android.support.v7.widget.AppCompatImageView im
         }
     }
 
-
-//    //打开PicActivity
-//    private void startPictureActivity(SingleImage image) {
-//        Intent intent = PicActivity.newIntent(getContext(), image.url,null,0);
-//        //异常处理
-//        getContext().startActivity(intent);
-//    }
-
     @Override
     public void onClick(View v) {
 //        startPictureActivity(this);

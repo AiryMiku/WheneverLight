@@ -8,7 +8,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 
 /**
- * Created by Airy on 2017/7/15.
+ * Created by Someone I really don't know who is the true author on 2017/7/15.
  */
 
 public class SingleImage extends android.support.v7.widget.AppCompatImageView implements View.OnClickListener{

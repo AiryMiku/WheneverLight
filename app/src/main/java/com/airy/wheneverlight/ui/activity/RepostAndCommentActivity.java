@@ -50,17 +50,17 @@ public class RepostAndCommentActivity extends AppCompatActivity implements BaseA
                 onBackPressed();
                 break;
             case R.id.send:
-                sendComment(RepostAndCommentText.getText().toString()+"http://android.com.cn");
+                sendComment(RepostAndCommentText.getText().toString());
 
                 break;
         }
         return true;
     }
 
-    private Map<String,Object> getRequestMap(String token, String status,String id) {
+    private Map<String,Object> getRequestMap(String token, String comment,String id) {
         Map<String, Object> map = new HashMap<>();
         map.put("access_token", token);
-        map.put("status",status);
+        map.put("comment",comment);
         map.put("id",id);
         return map;
     }

@@ -39,10 +39,10 @@ import rx.schedulers.Schedulers;
 
 public class HomePageActivity extends AppCompatActivity implements BaseActivityContract{
 
-    final static int COMMENT_TIME_LINE = 1;
-    final static int COMMENT_TO_ME = 2;
-    final static int COMMENT_MENTION = 3;
-    final static int COMMENT_BY_ME = 4;
+    final public static int COMMENT_TIME_LINE = 1;
+    final public static int COMMENT_TO_ME = 2;
+    final public static int COMMENT_MENTION = 3;
+    final public static int COMMENT_BY_ME = 4;
 
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;

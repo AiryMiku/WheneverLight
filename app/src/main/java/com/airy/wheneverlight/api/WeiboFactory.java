@@ -11,9 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeiboFactory {
 
-
     static WeiboApi weiBoApiSingleton = null;
-
 
     //return Singleton
     public static WeiboApi getWeiBoApiSingleton() {
@@ -31,8 +29,6 @@ public class WeiboFactory {
         public WeiboApi getWeiboApiService(){
             return weiboApiService;
         }
-
-
 
         weiboApiRetrofit() {
             OkHttpClient client = new OkHttpClient.Builder()

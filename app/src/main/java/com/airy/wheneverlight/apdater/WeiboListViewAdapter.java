@@ -148,7 +148,6 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
                 holder.retweetedNineImage.setVisibility(View.VISIBLE);
                 holder.retweetedNineImage.setImagesData(rs.getPic_urls());
             }
-
         }else {
             //没转发
             holder.retweetedLayout.setVisibility(View.GONE);

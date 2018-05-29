@@ -42,9 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnClickListener(v -> mSsoHandler.authorize(new WLAuthListener()));
 
         homePageButton = (Button) findViewById(R.id.homepage_button);
-        homePageButton.setOnClickListener(v->{
-            startActivity(new Intent(MainActivity.this,HomePageActivity.class));
-        });
+        homePageButton.setOnClickListener(v-> startActivity(new Intent(MainActivity.this,HomePageActivity.class)));
 
         mAccessToken = Oauth2Util.readToken(this);
         if (mAccessToken.isSessionValid()){

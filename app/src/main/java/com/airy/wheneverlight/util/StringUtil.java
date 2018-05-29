@@ -18,9 +18,10 @@ public class StringUtil {
     * */
     public static String getTail(String source){
         int start = source.indexOf(">");
-        if (start == -1) return null;
+        if (start == -1) {
+            return null;
+        }
         int end = source.indexOf("</a>",start);
-        if (start == -1) return null;
         return source.substring(start+1,end);
     }
 
@@ -42,5 +43,8 @@ public class StringUtil {
         return "";
     }
 
+    public static void main(String[] args) {
+        System.out.println(StringUtil.getTail("<a href=\"http://app.weibo.com/t/feed/6odKO1\" rel=\"nofollow\">iPhone X</a>"));
+    }
 
 }

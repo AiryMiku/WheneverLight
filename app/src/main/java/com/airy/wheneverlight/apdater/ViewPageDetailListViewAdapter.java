@@ -2,6 +2,7 @@ package com.airy.wheneverlight.apdater;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 
 import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.bean.Comments;
-import com.airy.wheneverlight.util.StringUtil;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -43,10 +43,12 @@ public class ViewPageDetailListViewAdapter extends RecyclerView.Adapter<ViewPage
     public void onBindViewHolder(ViewHolder holder, int position) {
         Comments item = mList.get(position);
 
-//        //TODO setup views
-//
+        //TODO setup views
+        Log.d(TAG,item.toString());
+//        Log.d(TAG,item.getSource());
+
         holder.commentTx.setText(item.getText());
-        holder.titleVia.setText(StringUtil.getTail(item.getSource()));
+//        holder.titleVia.setText(StringUtil.getTail(item.getSource()));
         holder.titleTime.setText(item.getCreated_at().substring(0,19));
         holder.titleTx.setText(item.getUser().getName());
         Glide.with(mContext).load(item.getUser().getAvatar_large()).into(holder.titleImage);

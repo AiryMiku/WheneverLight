@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdapter.ViewHolder> {
 
-    final static String TAG = "Airy";
+    public final static String TAG = "Status";
     private Context mContext;
     private List<Status> statuses;
     private OnItemClickListener mListener;
@@ -111,6 +111,7 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder,int position) {
+
         Status s = statuses.get(position);
         holder.titleTx.setText(s.getUser().getName());
         holder.contentTx.setText(s.getText());
@@ -121,7 +122,6 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
         holder.repostTx.setText("转发 "+s.getReposts_count());
 
         Status rs = s.getRetweeted_status();
-
         if (rs != null){
             //有转发
             Log.d("WeiboListAdapter",position+" has retweet");
@@ -159,7 +159,7 @@ public class WeiboListViewAdapter extends RecyclerView.Adapter<WeiboListViewAdap
                 //只有一张图片
                 holder.nineImage.setVisibility(View.GONE);
                 holder.oneImage.setVisibility(View.VISIBLE);
-                Glide.with(mContext).load(s.getOriginal_pic()).into(holder.oneImage);
+                Glide.with(mContext).load(s.getPic_urls().get(0)).into(holder.oneImage);
                 //Log.d("WeiboListAdapter",position+" "+s.getPic_urls().get(0).getImage());
             }else if (s.getPic_urls().size() > 1){
                 //多张图片

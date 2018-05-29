@@ -6,6 +6,6 @@ package com.airy.wheneverlight.contract;
 
 public interface BaseActivityContract {
 
-    void initView();
+    public void initView();
 
 }

@@ -21,8 +21,8 @@ public class NineGridLayout extends ViewGroup {
      * 图片之间的间隔
      */
     private int gap = 5;
-    private int columns;//
-    private int rows;//
+    private int columns;
+    private int rows;
     private List listData;
     private int totalWidth;
 
@@ -54,7 +54,7 @@ public class NineGridLayout extends ViewGroup {
 
         //根据子view数量确定高度
         LayoutParams params = getLayoutParams();
-        params.height = singleHeight * rows + gap * (rows - 1);
+        params.height = singleHeight * rows + gap * (rows - 1); //行高+间隔
         setLayoutParams(params);
 
         for (int i = 0; i < childrenCount; i++) {

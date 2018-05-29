@@ -10,6 +10,6 @@ import android.view.View;
 
 public interface BaseFragmentContract {
 
-    View initView(View view);
+    public View initView(View view);
 
 }

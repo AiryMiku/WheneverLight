@@ -14,10 +14,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.airy.wheneverlight.R;
+import com.airy.wheneverlight.apdater.WeiboListViewAdapter;
 import com.airy.wheneverlight.apdater.WeiboViewPageAdapter;
 import com.airy.wheneverlight.bean.Status;
 import com.airy.wheneverlight.contract.BaseActivityContract;
 import com.airy.wheneverlight.util.StringUtil;
+import com.airy.wheneverlight.view.NineGridLayout;
+import com.airy.wheneverlight.view.SingleImage;
 import com.bumptech.glide.Glide;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,6 +39,8 @@ public class WeiboDetailActivity extends AppCompatActivity implements BaseActivi
     private Status mStatus;
     private WeiboViewPageAdapter adapter;
     private ViewPager mViewPager;
+    private SingleImage oneImage;
+    private NineGridLayout nineImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,7 @@ public class WeiboDetailActivity extends AppCompatActivity implements BaseActivi
     @Override
     public void initView() {
 
-        mStatus = (Status) getIntent().getSerializableExtra(TAG);
+        mStatus = (Status) getIntent().getSerializableExtra(WeiboListViewAdapter.TAG);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,7 +78,7 @@ public class WeiboDetailActivity extends AppCompatActivity implements BaseActivi
         weiboTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         //weiboTabLayout.addOnTabSelectedListener();
-
+        System.out.println(mStatus);
         adapter = new WeiboViewPageAdapter(getSupportFragmentManager(),mStatus.getIdstr());
         mViewPager.setAdapter(adapter);
         weiboTabLayout.setupWithViewPager(mViewPager);

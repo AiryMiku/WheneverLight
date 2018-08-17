@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -94,7 +96,7 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
     public void displayWeiboList(HomeTimeLine HomeTimeLine){
         list.clear();
         list.addAll(HomeTimeLine.getStatuses());
-        adapter.notifyDataSetChanged();
+        contentList.getAdapter().notifyDataSetChanged();
         swipeRefresh.setRefreshing(false);
     }
 
@@ -109,12 +111,17 @@ public class HomePageFragment extends Fragment implements BaseFragmentContract{
         contentList = (RecyclerView) view.findViewById(R.id.home_page_content_list);
         contentList.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new WeiboListViewAdapter(getContext(),list);
-        contentList.setAdapter(adapter);
+        ScaleInAnimationAdapter scale = new ScaleInAnimationAdapter(adapter);
+        scale.setDuration(500);
+        scale.setFirstOnly(false);
+        AlphaInAnimationAdapter alpha = new AlphaInAnimationAdapter(scale);
+        alpha.setDuration(600);
+        alpha.setFirstOnly(false);
+//        alpha.setInterpolator(new OvershootInterpolator());
+        contentList.setAdapter(alpha);
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.home_page_content_refresh);
-        swipeRefresh.setOnRefreshListener(() -> {
-            getWeiboTimeLine();
-            swipeRefresh.setRefreshing(false);
-        });
+        //            swipeRefresh.setRefreshing(false);
+        swipeRefresh.setOnRefreshListener(this::getWeiboTimeLine);
         //
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.send_weibo_float);
         floatingActionButton.setOnClickListener(v ->{

@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.airy.wheneverlight.R;
 import com.airy.wheneverlight.bean.Comments;
-import com.airy.wheneverlight.util.StringUtil;
 import com.bumptech.glide.Glide;
 
 import org.w3c.dom.Comment;
@@ -51,7 +50,7 @@ public class CommentListViewAdapter extends RecyclerView.Adapter<CommentListView
         holder.titleTx.setText(c.getUser().getName());
         holder.commentTx.setText(c.getText());
         holder.titleTime.setText(c.getCreated_at().substring(0,19));
-        holder.titleVia.setText(StringUtil.getTail(c.getSource()));
+//        holder.titleVia.setText(StringUtil.getTail(c.getSource()));
         holder.posterName.setText("@"+c.getStatus().getUser().getName()+":");
         holder.posterContentTx.setText(c.getStatus().getText());
         Glide.with(mContext).

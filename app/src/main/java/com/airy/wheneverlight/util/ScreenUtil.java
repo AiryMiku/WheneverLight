@@ -4,8 +4,6 @@ package com.airy.wheneverlight.util;
 import android.content.Context;
 /**
  * Created by Airy on 2017/7/15.
- *
- *
  * Utils of Screen
  */
 public class ScreenUtil {
